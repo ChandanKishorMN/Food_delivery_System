@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivaro | DBMS Food Delivery Dashboard</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="bx bxs-hot icon-logo"></i>
+                <span class="logo-text">Delivaro</span>
+            </div>
+
+            <nav class="sidebar-menu">
+                <a href="#" class="menu-item active" data-target="section-dashboard">
+                    <i class="bx bxs-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="menu-item" data-target="section-customers">
+                    <i class="bx bxs-user-detail"></i>
+                    <span>Customers</span>
+                </a>
+                <a href="#" class="menu-item" data-target="section-food">
+                    <i class="bx bxs-dish"></i>
+                    <span>Food Items</span>
+                </a>
+                <a href="#" class="menu-item" data-target="section-apps">
+                    <i class="bx bxs-mobile"></i>
+                    <span>Delivery Apps</span>
+                </a>
+                <a href="#" class="menu-item" data-target="section-orders">
+                    <i class="bx bxs-shopping-bag"></i>
+                    <span>Orders</span>
+                </a>
+                <a href="#" class="menu-item" data-target="section-agents">
+                    <i class="bx bxs-truck"></i>
+                    <span>Delivery Agents</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="status-indicator">
+                    <span class="pulse-dot"></span>
+                    <span class="db-status-text">Database Connected</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Body -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="content-header">
+                <div class="header-title-wrapper">
+                    <h1 id="page-title">Dashboard Overview</h1>
+                    <p id="page-subtitle" class="subtitle">System diagnostics and real-time summaries</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="btn-global-action">
+                        <i class="bx bx-plus"></i>
+                        <span id="btn-global-text">New Order</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dashboard Overview Section -->
+            <section id="section-dashboard" class="content-section active">
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-title">Total Orders</span>
+                            <div class="metric-icon icon-orange"><i class="bx bx-shopping-bag"></i></div>
+                        </div>
+                        <h2 class="metric-value" id="stat-orders">-</h2>
+                        <span class="metric-trend text-green"><i class="bx bx-trending-up"></i> Real-time Sync</span>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-title">Registered Customers</span>
+                            <div class="metric-icon icon-blue"><i class="bx bx-user"></i></div>
+                        </div>
+                        <h2 class="metric-value" id="stat-customers">-</h2>
+                        <span class="metric-trend text-blue"><i class="bx bx-user-check"></i> Connected MySQL</span>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-title">App Listings</span>
+                            <div class="metric-icon icon-purple"><i class="bx bx-mobile-vibration"></i></div>
+                        </div>
+                        <h2 class="metric-value" id="stat-apps">-</h2>
+                        <span class="metric-trend text-purple"><i class="bx bx-star"></i> Multi-channel</span>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-title">Active Fleet</span>
+                            <div class="metric-icon icon-green"><i class="bx bx-navigation"></i></div>
+                        </div>
+                        <h2 class="metric-value" id="stat-agents">-</h2>
+                        <span class="metric-trend text-green"><i class="bx bx-run"></i> Delivery Agents</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-details-grid">
+                    <!-- Recent Orders Card -->
+                    <div class="details-card">
+                        <div class="details-card-header">
+                            <h3>Live Orders Feed</h3>
+                            <a href="#" class="view-all-link" data-go-to="section-orders">Manage Orders</a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Customer</th>
+                                        <th>Food Item</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dashboard-recent-orders">
+                                    <!-- Populated via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Quick stats / Info -->
+                    <div class="details-card info-card">
+                        <div class="details-card-header">
+                            <h3>Database Entities</h3>
+                        </div>
+                        <div class="db-entity-list">
+                            <div class="entity-list-item">
+                                <div class="entity-info">
+                                    <i class="bx bx-user-circle bg-blue"></i>
+                                    <div>
+                                        <div class="entity-name">customer</div>
+                                        <div class="entity-attributes">customer_id (PK), name, phone_number, address
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="entity-list-item">
+                                <div class="entity-info">
+                                    <i class="bx bx-dish bg-orange"></i>
+                                    <div>
+                                        <div class="entity-name">food_item</div>
+                                        <div class="entity-attributes">food_id (PK), food_name, price,
+                                            availability_status</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="entity-list-item">
+                                <div class="entity-info">
+                                    <i class="bx bx-mobile bg-purple"></i>
+                                    <div>
+                                        <div class="entity-name">food_delivery_app</div>
+                                        <div class="entity-attributes">app_id (PK), app_name, contact_number, ratings
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="entity-list-item">
+                                <div class="entity-info">
+                                    <i class="bx bx-shopping-bag bg-red"></i>
+                                    <div>
+                                        <div class="entity-name">orders</div>
+                                        <div class="entity-attributes">order_id (PK), order_date, order_amount,
+                                            customer_id (FK), order_status, food_id (FK), app_id (FK)</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="entity-list-item">
+                                <div class="entity-info">
+                                    <i class="bx bx-truck bg-green"></i>
+                                    <div>
+                                        <div class="entity-name">delivery_person</div>
+                                        <div class="entity-attributes">delivery_id (PK), name, phone_number,
+                                            vehicle_type, order_id (FK)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Customers Section -->
+            <section id="section-customers" class="content-section">
+                <div class="section-actions-bar">
+                    <div class="search-input-wrapper">
+                        <i class="bx bx-search"></i>
+                        <input type="text" placeholder="Search customers by name..." id="search-customers">
+                    </div>
+                </div>
+                <div class="table-card">
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Customer ID</th>
+                                    <th>Name</th>
+                                    <th>Phone Number</th>
+                                    <th>Address</th>
+                                    <th class="actions-col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body-customers">
+                                <!-- Populated via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Food Items Section -->
+            <section id="section-food" class="content-section">
+                <div class="section-actions-bar">
+                    <div class="search-input-wrapper">
+                        <i class="bx bx-search"></i>
+                        <input type="text" placeholder="Search food items..." id="search-food">
+                    </div>
+                </div>
+                <div class="table-card">
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Food ID</th>
+                                    <th>Food Name</th>
+                                    <th>Price</th>
+                                    <th>Status</th>
+                                    <th class="actions-col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body-food">
+                                <!-- Populated via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Delivery Apps Section -->
+            <section id="section-apps" class="content-section">
+                <div class="section-actions-bar">
+                    <div class="search-input-wrapper">
+                        <i class="bx bx-search"></i>
+                        <input type="text" placeholder="Search delivery apps..." id="search-apps">
+                    </div>
+                </div>
+                <div class="table-card">
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>App ID</th>
+                                    <th>App Name</th>
+                                    <th>Contact Number</th>
+                                    <th>Ratings</th>
+                                    <th class="actions-col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body-apps">
+                                <!-- Populated via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Orders Section -->
+            <section id="section-orders" class="content-section">
+                <div class="section-actions-bar">
+                    <div class="search-input-wrapper">
+                        <i class="bx bx-search"></i>
+                        <input type="text" placeholder="Search orders by customer/food..." id="search-orders">
+                    </div>
+                </div>
+                <div class="table-card">
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Date</th>
+                                    <th>Customer</th>
+                                    <th>Food Item</th>
+                                    <th>Delivery Channel</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th class="actions-col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body-orders">
+                                <!-- Populated via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Delivery Agents Section -->
+            <section id="section-agents" class="content-section">
+                <div class="section-actions-bar">
+                    <div class="search-input-wrapper">
+                        <i class="bx bx-search"></i>
+                        <input type="text" placeholder="Search agents..." id="search-agents">
+                    </div>
+                </div>
+                <div class="table-card">
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Agent ID</th>
+                                    <th>Name</th>
+                                    <th>Phone Number</th>
+                                    <th>Vehicle Type</th>
+                                    <th>Assigned Order ID</th>
+                                    <th>Order Status</th>
+                                    <th class="actions-col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body-agents">
+                                <!-- Populated via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- GLOBAL DYNAMIC MODAL -->
+    <div class="modal-backdrop" id="modal-container">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="modal-title">Form Title</h3>
+                <button class="btn-close-modal" id="modal-close"><i class="bx bx-x"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="dynamic-form">
+                    <!-- Form contents injected dynamically based on action -->
+                    <div id="form-fields-container"></div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" id="btn-cancel-modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="btn-submit-modal">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/app.js"></script>
+</body>
+
+</html>
